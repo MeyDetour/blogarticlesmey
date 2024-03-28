@@ -50,12 +50,13 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .art {
     border-radius: 0;
     margin: 1vw;
-    width: 48%;
+    width: 45%;
     min-height: 28vh;
     background: var(--atchoum);
     border: 2px solid var(--dash);
