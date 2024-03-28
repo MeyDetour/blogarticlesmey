@@ -25,7 +25,10 @@ z-index: -1;
     border-radius: 50%;
 }
 .articleImage{
-
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+    object-position: center;
 }
 .carousel{
 

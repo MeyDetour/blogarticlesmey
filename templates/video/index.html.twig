@@ -7,7 +7,7 @@
 <div class="containerMade">
     <div class="row">
         {% for video in videos %}
-            <div class="col-4">
+            <div class="videoPageVideo col-lg-4 col-sm-12">
                 {% include 'video.html.twig' with  {
                     'route_name':'',
                     'videoClass':'imageAdded ',
@@ -15,8 +15,6 @@
                     'param':'',
                     'aClass':''} %}
             </div>
-
-
         {% endfor %}
 
     </div>

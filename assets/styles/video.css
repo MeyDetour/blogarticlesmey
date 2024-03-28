@@ -7,3 +7,6 @@
     object-fit: cover;
     object-position: center;
 }
+.videoPageVideo{
+    margin-block: 1vh;
+}

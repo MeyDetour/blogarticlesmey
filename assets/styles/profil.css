@@ -28,7 +28,12 @@
     justify-content: space-around;
 
 }
+.informationProfilContainer{
+    display: flex;
+    flex-direction: column;
+    margin-inline: 3vw;
 
+}
 .informationProfil {
     font-size: 1.4em;
     flex-direction: column;

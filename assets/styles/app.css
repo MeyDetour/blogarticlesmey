@@ -15,7 +15,7 @@
     --beige: #E2DCD7;
     --LightBeige: #e0cdbd;
     --beigeMd: #d79b6a;
-    --darkBeige: #594e45;
+    --darkBeige: #7d5738;
     --lighBleu: #bed5ff;
     --atchoum: #ffffff;
     --dash: #171717;
@@ -55,8 +55,8 @@ body {
 .art {
     border-radius: 0;
     margin: 1vw;
-    width: 20vw;
-
+    width: 48%;
+    min-height: 28vh;
     background: var(--atchoum);
     border: 2px solid var(--dash);
     padding: 3vh 2vw;
@@ -159,7 +159,7 @@ fieldset {
 .landingPage {
     display: flex;
     /* width: 100vw; */
-    height: 90vh;
+    height: 92vh;
     flex-direction: row;
 
     align-items: center;
@@ -169,6 +169,7 @@ fieldset {
     width: 50%;
     height: 100%;
     z-index: -1;
+    object-fit: cover;
 }
 
 .landingPage > div {
@@ -195,6 +196,7 @@ fieldset {
         flex-direction: column-reverse;
         align-items: center;
     }
+
     .landingPage div h1 {
         font-size: 3em;
         font-weight: 800;
@@ -202,15 +204,18 @@ fieldset {
         width: 95%;
         text-align: center;
     }
+
     .landingPage img {
         width: 100%;
         height: auto;
         z-index: -1;
     }
+
     .containerMade {
         padding: 6vh 5vw;
     }
-    .art{
+
+    .art {
         width: 100%;
     }
 }
