@@ -23,10 +23,8 @@
 
 .informationsContainer {
     width: 67%;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-around;
-
+    flex-direction: column;
+    align-items: center;
 }
 .informationProfilContainer{
     display: flex;
