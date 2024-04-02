@@ -30,13 +30,12 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setArticle($article);
             $comment->setAuthor($this->getUser());
-            $comment->setAuthor($this->getUser());
             $comment->setCreatedAt(new \DateTimeImmutable());
             $manager->persist($comment);
-
             $manager->flush();
-            }
-        return $this->redirectToRoute('show_article', ['id' => $article->getId()]);
+            return $this->redirectToRoute('comment_image',['id'=>$comment->getId()]);
+        }
+        return $this->render('comment/create.html.twig',['form'=>$form->createView()]);
 
     }
     #[Route('/comment/delete/{id}', name: 'delete_comment')]
@@ -64,7 +63,7 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('app_article');
         }
         $image = new Image();
-        $form = $this->createForm(ImageType::class, $image);
-        return $this->render('comment/file.html.twig', ['form' => $form->createView(),'comment'=>$comment]);
+        $formImage = $this->createForm(ImageType::class, $image);
+        return $this->render('comment/image.html.twig', ['formImage' => $formImage->createView(),'comment'=>$comment]);
     }
 }

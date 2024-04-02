@@ -1,3 +1,7 @@
+.containerMadeShowArticle {
+    padding: 5vh 2vw;
+}
+
 /*===============HEADER ==================*/
 
 .headerArticle {
@@ -69,7 +73,6 @@
     padding: 5vh;
     height: 100vh;
     border-radius: 50px;
-    background: var(--beige);
 }
 
 /*===============BODY GENERAL ==================*/
@@ -88,82 +91,83 @@
 }
 
 /*===============BODY1==================*/
-.articleBody1 {
+.articleBodyContainer .articleBody1 {
     width: 25%;
 
 }
 
-.articleBody1Section1 {
+.articleBodyContainer .articleBody1Section1 {
     height: fit-content;
 }
 
-.articleBody1Section2 {
+.articleBodyContainer .articleBody1Section2 {
     height: 30%;
 }
 
-.articleBody1Img {
+.articleBodyContainer .articleBody1Img {
     height: 55%;
 }
 
 
-.articleBodyAuthor {
+.articleBodyContainer .articleBodyAuthor {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.articleBodyAuthor div {
+.articleBodyContainer .articleBodyAuthor div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1vh;
 }
 
-.articleBodyAuthor div p {
+.articleBodyContainer .articleBodyAuthor div p {
     color: var(--dahsWrite);
     margin: 0;
 }
 
-.articleBodyAuthor div span {
+.articleBodyContainer .articleBodyAuthor div span {
     color: var(--greyWrite);
     font-size: 0.8em;
 }
-.articleBodyAuthorMobil{
+
+.articleBodyContainer .articleBodyAuthorMobil {
     display: none;
 }
 
 /*===============BODY2==================*/
 
-.articleBody2 {
+.articleBodyContainer .articleBody2 {
     width: 50%;
 }
 
-.articleBody2Img {
+.articleBodyContainer .articleBody2Img {
     height: 70% !important;
 }
 
 /*===============BODY3==================*/
-.articleBody3 {
+.articleBodyContainer .articleBody3 {
     width: 25%;
 
 }
 
-.articleBody3Section1 {
+.articleBodyContainer .articleBody3Section1 {
     height: 20%;
     background: var(--beige);
     padding: 2vh 1vw;
     position: relative;
 }
 
-.articleBody3Section2 {
+.articleBodyContainer .articleBody3Section2 {
     height: 80%;
 }
 
-.articleBody3Img {
+.articleBodyContainer .articleBody3Img {
     height: 25%;
 }
 
-.articleBody3Section1Line {
+.articleBodyContainer .articleBody3Section1Line {
     width: 70%;
     height: 2px;
     background: black;
@@ -180,11 +184,9 @@
 }
 
 .backArrow {
-    position: absolute;
-    left: 2%;
     font-size: 1em;
     font-weight: 800;
-    top: 12vh;
+
 }
 
 .articleBody {
@@ -243,27 +245,267 @@
     margin: 1vh;
 }
 
-@media only screen and (max-width: 500px) {
+
+/*===============ARTICLE DOUBLE PARAGRAPHE==================*/
+
+.articleBodyContainerDoubleP {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2vw;
+    padding: 0vh 3vw;
+    height: 100vh;
+    border-radius: 50px;
+    margin-bottom: 10vh;
+
+}
+
+.articleBodyContainerDoubleP .boutonsArticle {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    position: absolute;
+    right: 2%;
+    bottom: -9%;
+}
+
+.articleBodyContainerDoubleP p {
+    margin: 0;
+}
+
+.articleBodyContainerDoubleP .backArrow {
+    position: absolute;
+    top: 2%;
+    left: 1.5%;
+}
+
+.articleBodyContainerDoubleP .dropdown {
+    position: absolute;
+    top: 2%;
+    right: 1.5%;
+}
+
+/*===============BODY1========*/
+.articleBodyContainerDoubleP .articleBody1 {
+    width: 30%;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.articleBodyContainerDoubleP .articleBody1Section1 {
+    height: 35%;
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 4vh;
+}
+
+.articleBodyContainerDoubleP .articleBody1Section2 {
+
+    height: 65%;
+}
+
+.articleBodyContainerDoubleP .articleBody1Section2img img, .articleBodyContainerDoubleP .articleBody3Section2img img {
+    border-radius: 20px 20px 0px 0px;
+}
+
+/*===============BODY2========*/
+.articleBodyContainerDoubleP .articleBody2 {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.articleBodyContainerDoubleP .articleBody2Section1 {
+    height: 70% !important;
+}
+
+.articleBodyContainerDoubleP .articleBody2Section2 {
+    height: 30%;
+
+    padding-block: 4vh;
+}
+
+.articleBodyContainerDoubleP .articleBody2Section2img img {
+    border-radius: 0px 0px 20px 20px;
+}
+
+/*===============BODY3========*/
+.articleBodyContainerDoubleP .articleBody3 {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.articleBodyContainerDoubleP .articleBody3Section1 {
+    height: fit-content;
+    padding: 4vh 1vw;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+}
+
+.articleBodyContainerDoubleP .articleBody3Section2 {
+
+    height: 65%;
+}
+
+/*====COMMENTAIRES======*/
+
+.doubleArticleContainer {
+    padding: 2vh 3vw;
+}
+
+.doubleArticleContainer .commentContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-x: scroll;
+    padding-bottom: 1vh;
+
+
+}
+
+.commentContainer .card {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 27%;
+    border: 0;
+    margin-inline: 1vw;
+}
+
+.cardContentImages {
+    height: 8vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    padding-bottom: 10px;
+}
+
+.card .carContent {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2vh 1vw;
+    border: 1px solid var(--dash);
+
+}
+
+.cardAuthorAuthor {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 40%;
+
+}
+
+.cardAuthorAuthor > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
+.card .cardAuthor {
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: var(--dash);
+    color: var(--atchoum);
+    padding: 1vh;
+}
+
+.card .cardAuthor .dropdown .btn {
+    border: 1px solid white;
+    color: white;
+}
+
+.card .cardAuthor img {
+    width: 74px;
+    padding: 1vh;
+    height: fit-content;
+}
+
+.imageComment {
+    width: 22%;
+    margin-inline: 0.5vw;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media only screen and (max-width: 900px) {
+
+
+    .containerMadeShowArticle .imageFondArticle {
+        display: none;
+    }
+
     .rightHeaderArticle {
+        width: 78%;
+
+    }
+
+    .articleBodyContainer .articleBody3Section1Line {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .containerMadeShowArticle .rightHeaderArticle {
         width: 100%;
         padding-top: 0vh;
     }
 
-    .containerMade {
+    .containerMadeShowArticle .containerMade {
         padding: 10vh 5vw;
     }
 
-    .articleBodyContainer {
+    .containerMadeShowArticle .articleBodyContainer {
         height: fit-content;
         width: 100%
     }
 
-    .headerArticle {
+    .containerMadeShowArticle .headerArticle {
         flex-direction: column;
         height: fit-content;
+        margin-top: 2vh;
     }
 
-    .rightHeaderArticle h1 {
+    .containerMadeShowArticle .rightHeaderArticle h1 {
         font-size: 20px;
 
         font-weight: 600;
@@ -272,34 +514,36 @@
     p {
         font-size: 15px;
     }
-    .articleBody1Img {
+
+    .containerMadeShowArticle .articleBody1Img {
         width: 100%;
     }
-    .imageFondArticle {
+
+    .containerMadeShowArticle .imageFondArticle {
         display: none;
     }
 
-    .articleBodyContainer {
+    .containerMadeShowArticle .articleBodyContainer {
         flex-direction: column;
     }
 
-    .articleBody1, .articleBody3, .articleBody2 {
+    .containerMadeShowArticle .articleBody1, .containerMadeShowArticle .articleBody3, .containerMadeShowArticle .articleBody2 {
         width: 100%;
     }
 
-    .articleCategoryName {
+    .containerMadeShowArticle .articleCategoryName {
         font-size: 13px;
     }
 
-    .articleCategory {
+    .containerMadeShowArticle .articleCategory {
         flex-wrap: wrap;
     }
 
-    .artcielSeparatorHeaderBody {
+    .containerMadeShowArticle .artcielSeparatorHeaderBody {
         display: none;
     }
 
-    .settingsDropdown {
+    .containerMadeShowArticle .settingsDropdown {
         position: absolute;
 
         right: 2%;
@@ -307,14 +551,17 @@
         font-weight: 800;
         top: 12vh;
     }
-    .articleBody1Section2{
+
+    .containerMadeShowArticle .articleBody1Section2 {
         display: none;
     }
-    .articleBodyAuthorMobil{
+
+    .containerMadeShowArticle .articleBodyAuthorMobil {
         display: flex;
         margin-block: 4vh;
     }
-    .articleBody3Section1{
+
+    .containerMadeShowArticle .articleBody3Section1 {
         display: none;
     }
 }

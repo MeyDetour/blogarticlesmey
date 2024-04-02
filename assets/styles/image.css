@@ -33,3 +33,16 @@ z-index: -1;
 .carousel{
 
 }
+.imageAddedContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.imageAddedContainer .imagePreview{
+    width: 20vw;
+    height: 30vh;
+    margin: 1vw;
+    border: 1px solid grey;
+
+}

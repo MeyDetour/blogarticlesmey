@@ -20,6 +20,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -37,12 +38,8 @@ class ArticleController extends AbstractController
     public function show(Article $article): Response
     {
 
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'form' => $form
+           return $this->render('article/show.html.twig', [
+            'article' => $article
         ]);
     }
 

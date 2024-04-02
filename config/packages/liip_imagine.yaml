@@ -13,6 +13,10 @@ liip_imagine:
             quality: 80
             filters:
                 thumbnail: { size: [ 75,75 ], mode: outbound }
+        image_comment:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 150,150 ], mode: outbound }
         apercu_image:
             quality: 100
             filters:

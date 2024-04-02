@@ -1,38 +1,457 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'article/base.html.twig' %}
+ {% set mod = 'simpleArticle' %}
 {% block title %}Articles{% endblock %}
-{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
 {% block body %}
-    <div class="containerMade">
+    {% if (article.secondSubtitle|default(null) is null or article.secondSubtitle == '')
+        and (article.secondParagraphe|default(null) is null or article.secondParagraphe == '')
+        and (article.thirdSubtitle|default(null) is null or article.thirdSubtitle == '')
+        and (article.thirdParagraphe|default(null) is null or article.thirdParagraphe == '') %}
+        {% set mod = 'simpleArticle' %}
+    {% elseif (article.thirdSubtitle|default(null) is null or article.thirdSubtitle == '')
+        and (article.thirdParagraphe|default(null) is null or article.thirdParagraphe == '') %}
+        {% set mod = 'secondArticle' %}
+    {% endif %}
+    {% if (article.secondSubtitle|default(null) is not null and article.secondSubtitle != '')
+        and (article.secondParagraphe|default(null) is not null and article.secondParagraphe != '')
+        and (article.thirdSubtitle|default(null) is not null and article.thirdSubtitle != '')
+        and (article.thirdParagraphe|default(null) is not null and article.thirdParagraphe != '') %}
+        {% set mod = 'completeArticle' %}
+    {% endif %}
+
+    <script>
+
+        function like(event) {
+            event.preventDefault()
+            const element = event.currentTarget; // Accède à l'élément sur lequel l'événement a été déclenché
+            console.log(event, element);
+            fetch(element.href)
+                .then(response => response.json())
+                .then((data) => {
+                    element.querySelector('.nbrLikes').textContent = data.count
+                    let icon = element.querySelector('.bi');
+                    if (data.isLiked) {
+                        icon.classList.add('bi-hand-thumbs-up-fill');
+                        icon.classList.remove('bi-hand-thumbs-up');
+                    } else {
+                        icon.classList.remove('bi-hand-thumbs-up-fill');
+                        icon.classList.add('bi-hand-thumbs-up');
+                    }
+                })
+        }
 
 
-        {#  HEADER  #}
-        <header class="headerArticle">
-            <img class="imageFondArticle" src="{{ asset('image/logo.webp') }}" alt="Image de fond">
+    </script>
 
-            <div class="rightHeaderArticle">
-                <h1>{{ article.title }}</h1>
-                <p>{{ article.chapo }}</p>
-            </div>
-            <div class="dropdown settingsDropdown">
-                <button class="btn btn1" type="button" data-bs-toggle="dropdown">
-                    <i class=" bi bi-sliders"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item btn btn-primary" href="{{ path('delete_article',{'id': article.id}) }}">supprimer</a>
-                    </li>
-                    <li><a class="dropdown-item btn btn-primary"
-                           href="{{ path('edit_article',{'id': article.id}) }}">Editer</a></li>
-                    <li><a class="dropdown-item btn btn-primary" href="{{ path('article_file',{'id':article.id}) }}">Ajouter
-                            un fichier</a></li>
-
-                </ul>
-            </div>
+    {% if mod == 'simpleArticle' or  mod == 'completeArticle' %}
+        <div class="containerMadeShowArticle">
             <span class="backArrow"><a href="{{ path('app_article') }}"><i class="bi bi-arrow-left-short"></i> Retour aux articles</a></span>
 
-        </header>
-        <hr class="artcielSeparatorHeaderBody">
 
+            {#  HEADER  #}
+            {% if mod == 'completeArticle' %}
+                <header class="headerArticle">
+                    <img class="imageFondArticle" src="{{ asset('image/headerArticle.webp') }}" alt="Image de fond">
+
+                    <div class="rightHeaderArticle">
+                        <h1>{{ article.title }}</h1>
+                        <p>{{ article.chapo }}</p>
+                    </div>
+                    {% if app.user == article.author %}
+
+                        <div class="dropdown settingsDropdown">
+                            <button class="btn btn1" type="button" data-bs-toggle="dropdown">
+                                <i class=" bi bi-sliders"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('delete_article',{'id': article.id}) }}">supprimer</a>
+                                </li>
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('edit_article',{'id': article.id}) }}">Editer</a></li>
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('article_file',{'id':article.id}) }}">Ajouter
+                                        un fichier</a></li>
+
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                </header>
+                <hr class="artcielSeparatorHeaderBody">
+
+                <div class="articleCategory">
+                    {% for category in article.categories %}
+
+                        <a href="{{ path('filter_category',{'id':category.id}) }}"
+                           class="articleCategoryName">#{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="articleBodyContainer">
+                    <div class="articleBody1">
+                        <div class="articleBody1Section1">
+                            {% if article.images is not empty %}
+                                {% for image in article.images %}
+                                    {% if loop.index == 1 %}
+                                        {% include 'image.html.twig' with  {
+                                            'route_name':'',
+                                            'imgClass':'imageAdded articleBody1Img',
+                                            'image':image,
+                                            'param':{},
+                                            'aClass':''
+                                        } %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <h2 class="articleBodySubtitle">{{ article.firstSubtitle }}</h2>
+                            <p class="articleBodyParagraphe">{{ article.firstParagraphe }}</p>
+
+                        </div>
+                        <hr>
+                        <div class="articleBody1Section2">
+                            <div class="articleBodyAuthor">
+                                {% if article.author.image %}
+                                    <img class="imgPdp"
+                                         src="{{ vich_uploader_asset(article.author.image) | imagine_filter('petite_vignette') }}"
+                                         alt="">
+                                {% else %}
+
+                                    <img class="imgPdp"
+                                         src="{{ asset('images/imgProfil.png') | imagine_filter('petite_vignette') }}"
+                                         alt="">
+                                {% endif %}
+                                <div>
+                                    <p>Auteur : {{ article.author.username }}</p>
+                                    <span>Auteur de l'article</span>
+                                </div>
+                            </div>
+
+                            <a href="{{ path("like_article", {id:article.id}) }}" onclick="like(event)"
+                               class="likeButton btn btn1">
+                                Like
+                                <span class="nbrLikes">({{ article.likes|length }})</span>
+                                {% if app.user %}
+                                    <i
+                                            class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
+                                    ></i>
+                                {% endif %}
+                            </a>
+
+                        </div>
+
+
+                    </div>
+                    <div class="articleBody2">
+                        {% if article.images is not empty %}
+                            {% for image in article.images %}
+                                {% if loop.index == 2 %}
+                                    {% include 'image.html.twig' with  {
+                                        'route_name':'',
+                                        'imgClass':'imageAdded articleBody2Img',
+                                        'image':image,
+                                        'param':{},
+                                        'aClass':''
+                                    } %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                        <h2 class="articleBodySubtitle">{{ article.secondSubtitle }}</h2>
+                        <p class="articleBodyParagraphe">{{ article.secondParagraphe }}</p>
+
+
+                    </div>
+                    <div class="articleBody3">
+                        <div class="articleBody3Section1">
+                            <div class="articleBody3Section1Line"></div>
+                            {{ article.createdAt | date('d-m-Y') }}
+                            {{ article.note }}
+                        </div>
+                        <hr>
+                        <div class="articleBody3Section2">
+                            {% if article.images is not empty %}
+                                {% for image in article.images %}
+                                    {% if loop.index == 3 %}
+                                        {% include 'image.html.twig' with  {
+                                            'route_name':'',
+                                            'imgClass':'imageAdded articleBody3Img',
+                                            'image':image,
+                                            'param':{},
+                                            'aClass':''
+                                        } %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <h2 class="articleBodySubtitle">{{ article.thirdSubtitle }}</h2>
+                            <p class="articleBodyParagraphe">{{ article.thirdParagraphe }}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="articleBodyAuthorMobil">
+                        <div class="articleBodyAuthor">
+                            {% if article.author.image %}
+                                <img class="imgPdp"
+                                     src="{{ vich_uploader_asset(article.author.image) | imagine_filter('petite_vignette') }}"
+                                     alt="">
+                            {% else %}
+
+                                <img class="imgPdp"
+                                     src="{{ asset('images/imgProfil.png') | imagine_filter('petite_vignette') }}" alt="">
+                            {% endif %}
+                            <div>
+                                <p>Auteur : {{ article.author.username }}</p>
+                                <span>Auteur de l'article</span>
+                                {{ article.createdAt | date('d-m-Y') }}
+                                {{ article.note }}
+                                <a href="{{ path("like_article", {id:article.id}) }}" onclick="like(event)"
+                                   class="likeButton btn btn1">
+                                    Like
+                                    <span class="nbrLikes">({{ article.likes|length }})</span>
+                                    {% if app.user %}
+                                        <i
+                                                class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
+                                        ></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                {#  COMENTAIRES  #}
+                {% if article.DisplayComments %}
+                    <div class="commentContainer">
+
+                        <div>
+                            {{ form_start(form,{'action':path('new_comment',{'id':article.id})}) }}
+                            {{ form_row(form.content) }}
+                            <button class="btn btn-success">Poster le commentaire</button>
+                            {{ form_end(form) }}
+
+                        </div>
+                        <div>
+                            {% for comment in article.comments %}
+                                <div class="card">
+                                    <h5>{{ comment.author.email }}</h5>
+                                    <p>{{ comment.content }}</p>
+                                    <p>{{ comment.createdAt | date('d-m-Y') }}</p>
+                                    <a href="{{ path("like_comment", {id:comment.id}) }}"
+                                       class="likeButton btn btn-primary">
+                                        Like
+                                        <span class="nbrLikes">({{ comment.likes|length }})</span>
+                                        {% if app.user %}
+                                            <i
+                                                    class="bi bi-hand-thumbs-up{% if comment.isLikedBy(app.user) %}-fill{% endif %}"
+                                            ></i>
+                                        {% endif %}
+                                    </a>
+                                    {% for image in comment.images %}
+                                        {% include 'image.html.twig' with  {
+                                            'route_name':'',
+                                            'imgClass':'imageAdded',
+                                            'image':image,
+                                            'param':{},
+                                            'aClass':''} %}
+                                    {% endfor %}
+                                    <a class="btn btn-primary"
+                                       href="{{ path('delete_comment',{'id': comment.id}) }}">supprimer</a>
+                                    <a class="btn btn-primary" href="{{ path('comment_image',{'id': comment.id}) }}">ajouter
+                                        image</a>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endif %}
+            {% if mod == 'simpleArticle' %}
+                <div class="simpleArticle">
+
+                    {% if app.user == article.author %}
+                        <div class="dropdown settingsDropdown">
+                            <button class="btn btn1" type="button" data-bs-toggle="dropdown">
+                                <i class=" bi bi-sliders"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('delete_article',{'id': article.id}) }}">supprimer</a>
+                                </li>
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('edit_article',{'id': article.id}) }}">Editer</a></li>
+                                <li><a class="dropdown-item btn btn-primary"
+                                       href="{{ path('article_file',{'id':article.id}) }}">Ajouter
+                                        un fichier</a></li>
+
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <div class="articleHeader">
+                        <h1>{{ article.title }}</h1>
+                        <p>{{ article.chapo }}</p>
+
+                    </div>
+
+                    <div class="articleBodyContent">
+                        <div>
+                            <h2>{{ article.firstSubtitle }}</h2>
+                            <p>{{ article.firstParagraphe }}</p>
+
+                        </div>
+                        {% if article.images is not empty %}
+                            {% for image in article.images %}
+                                {% if loop.index == 1 %}
+                                    {% include 'image.html.twig' with  {
+                                        'route_name':'',
+                                        'imgClass':'imageAdded  ',
+                                        'image':image,
+                                        'param':{},
+                                        'aClass':''
+                                    } %}
+                                {% endif %}
+
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <a href="{{ path("like_article", {id:article.id}) }}" onclick="like(event)"
+                       class="likeButton btn btn1">
+                        Like
+                        <span class="nbrLikes">({{ article.likes|length }})</span>
+                        {% if app.user %}
+                            <i
+                                    class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
+                            ></i>
+                        {% endif %}
+                    </a>
+
+
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if mod == 'secondArticle' %}
+
+    <div class="articleBodyContainerDoubleP">
+        <div class="articleBody1">
+            <div class="articleBody1Section1">
+                <span class="backArrow"><a href="{{ path('app_article') }}"><i class="bi bi-arrow-left-short"></i> Retour aux articles</a></span>
+                {% if app.user == article.author %}
+
+                    <div class="dropdown settingsDropdown">
+                        <button class="btn btn1" type="button" data-bs-toggle="dropdown">
+                            <i class=" bi bi-sliders"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item btn btn-primary"
+                                   href="{{ path('delete_article',{'id': article.id}) }}">supprimer</a>
+                            </li>
+                            <li><a class="dropdown-item btn btn-primary"
+                                   href="{{ path('edit_article',{'id': article.id}) }}">Editer</a></li>
+                            <li><a class="dropdown-item btn btn-primary"
+                                   href="{{ path('article_file',{'id':article.id}) }}">Ajouter
+                                    un fichier</a></li>
+
+                        </ul>
+                    </div>
+                {% endif %}
+                <h2>{{ article.title }}</h2>
+                <p>{{ article.chapo }}</p>
+            </div>
+
+            <div class="articleBody1Section2">
+                {% if article.images is not empty %}
+                    {% for image in article.images %}
+                        {% if loop.index == 1 %}
+                            {% include 'image.html.twig' with  {
+                                'route_name':'',
+                                'imgClass':'imageAdded articleBody1Section2img',
+                                'image':image,
+                                'param':{},
+                                'aClass':''
+                            } %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+        </div>
+        <div class="articleBody2">
+
+            <div class="articleBody2Section1">
+                {% if article.images is not empty %}
+                    {% for image in article.images %}
+                        {% if loop.index == 2 %}
+                            {% include 'image.html.twig' with  {
+                                'route_name':'',
+                                'imgClass':'imageAdded articleBody2Section2img',
+                                'image':image,
+                                'param':{},
+                                'aClass':''
+                            } %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="articleBody2Section2">
+                <h4> {{ article.firstSubtitle }}</h4>
+                <p> {{ article.firstParagraphe }}</p>
+
+            </div>
+
+        </div>
+        <div class="articleBody3">
+            <div class="articleBody3Section1">
+                <h4> {{ article.secondSubtitle }}</h4>
+                <p> {{ article.secondParagraphe }}</p>
+            </div>
+
+            <div class="articleBody3Section2">
+                {% if article.images is not empty %}
+                    {% for image in article.images %}
+                        {% if loop.index == 3 %}
+                            {% include 'image.html.twig' with  {
+                                'route_name':'',
+                                'imgClass':'imageAdded articleBody3Section2img',
+                                'image':image,
+                                'param':{},
+                                'aClass':''
+                            } %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="boutonsArticle">
+            <a href="{{ path("like_article", {id:article.id}) }}" onclick="like(event)"
+               class="likeButton btn btn1">
+                Like
+                <span class="nbrLikes">({{ article.likes|length }})</span>
+                {% if app.user %}
+                    <i
+                            class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
+                    ></i>
+                {% endif %}
+            </a>
+            <a href="{{ path("new_comment", {id:article.id}) }}"
+               class="likeButton btn btn2">
+                Commenter
+            </a>
+        </div>
+    </div>
+
+
+
+
+    <div class="doubleArticleContainer">
+        <hr>
         <div class="articleCategory">
             {% for category in article.categories %}
 
@@ -41,188 +460,89 @@
             {% endfor %}
         </div>
 
-        <div class="articleBodyContainer">
-            <div class="articleBody1">
-                <div class="articleBody1Section1">
-                    {% if article.images is not empty %}
-                        {% for image in article.images %}
-                            {% if loop.index == 1 %}
-                                {% include 'image.html.twig' with  {
-                                    'route_name':'',
-                                    'imgClass':'imageAdded articleBody1Img',
-                                    'image':image,
-                                    'param':{},
-                                    'aClass':''
-                                } %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    <h2 class="articleBodySubtitle">{{ article.firstSubtitle }}</h2>
-                    <p class="articleBodyParagraphe">{{ article.firstParagraphe }}</p>
-
-                </div>
-                <hr>
-                <div class="articleBody1Section2">
-                    <div class="articleBodyAuthor">
-                        {% if article.author.image %}
-                            <img class="imgPdp"
-                                 src="{{ vich_uploader_asset(article.author.image) | imagine_filter('petite_vignette') }}"
-                                 alt="">
-                        {% else %}
-
-                            <img class="imgPdp"
-                                 src="{{ asset('images/imgProfil.png') | imagine_filter('petite_vignette') }}" alt="">
-                        {% endif %}
-                        <div>
-                            <p>Auteur : {{ article.author.username }}</p>
-                            <span>Auteur de l'article</span>
-                        </div>
-                    </div>
-
-
-                    <a href="{{ path("like_article", {id:article.id}) }}" class="likeButton btn btn1">
-                        Like
-                        <span class="nbrLikes">({{ article.likes|length }})</span>
-                        {% if app.user %}
-                            <i
-                                    class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
-                            ></i>
-                        {% endif %}
-                    </a>
-
-                </div>
-
-
-            </div>
-            <div class="articleBody2">
-                {% if article.images is not empty %}
-                    {% for image in article.images %}
-                        {% if loop.index == 2 %}
-                            {% include 'image.html.twig' with  {
-                                'route_name':'',
-                                'imgClass':'imageAdded articleBody2Img',
-                                'image':image,
-                                'param':{},
-                                'aClass':''
-                            } %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-
-                <h2 class="articleBodySubtitle">{{ article.secondSubtitle }}</h2>
-                <p class="articleBodyParagraphe">{{ article.secondParagraphe }}</p>
-
-
-            </div>
-            <div class="articleBody3">
-                <div class="articleBody3Section1">
-                    <div class="articleBody3Section1Line"></div>
-                    {{ article.createdAt | date('d-m-Y') }}
-                    {{ article.note }}
-                </div>
-                <hr>
-                <div class="articleBody3Section2">
-                    {% if article.images is not empty %}
-                        {% for image in article.images %}
-                            {% if loop.index == 3 %}
-                                {% include 'image.html.twig' with  {
-                                    'route_name':'',
-                                    'imgClass':'imageAdded articleBody3Img',
-                                    'image':image,
-                                    'param':{},
-                                    'aClass':''
-                                } %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    <h2 class="articleBodySubtitle">{{ article.thirdSubtitle }}</h2>
-                    <p class="articleBodyParagraphe">{{ article.thirdParagraphe }}</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
         {#  COMENTAIRES  #}
         {% if article.DisplayComments %}
             <div class="commentContainer">
 
-                <div>
-                    {{ form_start(form,{'action':path('new_comment',{'id':article.id})}) }}
-                    {{ form_row(form.content) }}
-                    <button class="btn btn-success">Poster le commentaire</button>
-                    {{ form_end(form) }}
 
-                </div>
-                <div>
-                    {% for comment in article.comments %}
-                        <div class="card">
-                            <h5>{{ comment.author.email }}</h5>
+                {% for comment in article.comments %}
+                    <div class="card">
+
+                        <div class="carContent">
                             <p>{{ comment.content }}</p>
-                            <p>{{ comment.createdAt | date('d-m-Y') }}</p>
-                            <a href="{{ path("like_comment", {id:comment.id}) }}"
-                               class="likeButton btn btn-primary">
-                                Like
-                                <span class="nbrLikes">({{ comment.likes|length }})</span>
-                                {% if app.user %}
-                                    <i
-                                            class="bi bi-hand-thumbs-up{% if comment.isLikedBy(app.user) %}-fill{% endif %}"
-                                    ></i>
+
+                            <div class="cardContentImages">
+                                {% if comment.images is not empty %}
+                                    {% for image in comment.images %}
+
+                                        {% include 'imageFilter.html.twig' with  {
+                                            'route_name':'',
+                                            'imgClass':'imageAdded  ',
+                                            'image':image,
+                                            'param':{},
+                                            'aClass':'imageComment',
+                                            'filter':'image_comment'
+                                        } %}
+
+                                    {% endfor %}
                                 {% endif %}
-                            </a>
-                            {% for image in comment.images %}
-                                {% include 'image.html.twig' with  {
-                                    'route_name':'',
-                                    'imgClass':'imageAdded',
-                                    'image':image,
-                                    'param':{},
-                                    'aClass':''} %}
-                            {% endfor %}
-                            <a class="btn btn-primary"
-                               href="{{ path('delete_comment',{'id': comment.id}) }}">supprimer</a>
-                            <a class="btn btn-primary" href="{{ path('comment_image',{'id': comment.id}) }}">ajouter
-                                image</a>
+                            </div>
 
                         </div>
-                    {% endfor %}
-                </div>
+                        <div class="cardAuthor">
+
+                            <div class="cardAuthorAuthor">
+                                {% if article.author.image %}
+                                    <img class="imgPdp"
+                                         src="{{ vich_uploader_asset(article.author.image) | imagine_filter('ma_vignette') }}"
+                                         alt="">
+                                {% else %}
+
+                                    <img class="imgPdp"
+                                         src="{{ asset('images/imgProfil.png') | imagine_filter('ma_vignette') }}"
+                                         alt="">
+                                {% endif %}
+                                <div>
+
+                                    {{ article.author.username }}
+                                    <p>{{ comment.createdAt | date('d-m-Y') }}</p>
+                                </div>
+                            </div>
+                            <div class="dropdown settingsDropdown">
+                                <button class="btn " type="button" data-bs-toggle="dropdown">
+                                    <i class=" bi bi-sliders"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path("like_comment", {id:comment.id}) }}"
+                                           class="likeButton btn  ">
+                                            Like
+                                            <span class="nbrLikes">({{ comment.likes|length }})</span>
+                                            {% if app.user %}
+                                                <i
+                                                        class="bi bi-hand-thumbs-up{% if comment.isLikedBy(app.user) %}-fill{% endif %}"
+                                                ></i>
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                    <li><a class="btn  "
+                                           href="{{ path('delete_comment',{'id': comment.id}) }}">supprimer</a></li>
+                                    <li><a class="btn  " href="{{ path('comment_image',{'id': comment.id}) }}">ajouter
+                                            image</a></li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+
+
             </div>
+
         {% endif %}
 
-        <div class="articleBodyAuthorMobil">
-            <div class="articleBodyAuthor">
-                {% if article.author.image %}
-                    <img class="imgPdp"
-                         src="{{ vich_uploader_asset(article.author.image) | imagine_filter('petite_vignette') }}"
-                         alt="">
-                {% else %}
 
-                    <img class="imgPdp"
-                         src="{{ asset('images/imgProfil.png') | imagine_filter('petite_vignette') }}" alt="">
-                {% endif %}
-                <div>
-                    <p>Auteur : {{ article.author.username }}</p>
-                    <span>Auteur de l'article</span>
-                    {{ article.createdAt | date('d-m-Y') }}
-                    {{ article.note }}
-                    <a href="{{ path("like_article", {id:article.id}) }}" class="likeButton btn btn1">
-                        Like
-                        <span class="nbrLikes">({{ article.likes|length }})</span>
-                        {% if app.user %}
-                            <i
-                                    class="bi bi-hand-thumbs-up{% if article.isLikedBy(app.user) %}-fill{% endif %}"
-                            ></i>
-                        {% endif %}
-                    </a>
-                </div>
-            </div>
+        {% endif %}
 
-
-
-
-        </div>
     </div>
-    <script src="{{ asset('js/like.js') }}" defer></script>
-
 {% endblock %}

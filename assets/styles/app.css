@@ -162,15 +162,37 @@ fieldset {
     /* width: 100vw; */
     height: 92vh;
     flex-direction: row;
-
+    position: relative;
+    justify-content: center;
     align-items: center;
 }
 
-.landingPage img {
-    width: 50%;
-    height: 100%;
+.landingPage .img2, .landingPage .img1 {
+    position: absolute;
+
     z-index: -1;
     object-fit: cover;
+
+}
+
+.landingPage .img1 {
+
+    width: 26%;
+    height: 72%;
+    top: 0%;
+    left: 5%;
+    border-radius: 0px 0px 60px 60px;
+
+
+}
+
+.landingPage .img2 {
+    width: 26%;
+    height: 72%;
+    bottom: 0%;
+    right: 5%;
+    border-radius: 60px 60px 0px 0px;
+
 }
 
 .landingPage > div {
@@ -184,11 +206,49 @@ fieldset {
 
 .landingPage div h1 {
 
-    font-size: 3em;
+    font-size: 5em;
     font-weight: 800;
-    color: var(--darkBeige);
+    color: var(--dash);
 }
 
+
+@media only screen and (max-width: 1500px) {
+    .landingPage div h1 {
+        font-size: 4em;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .landingPage div h1 {
+        font-size: 3em;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .landingPage .img1 {
+        width: 76%;
+        height: 30%;
+        top: 10%;
+        left: 0%;
+        border-radius: 0px 50px 50px 0px;
+    }
+
+    .landingPage .img2 {
+        width: 76%;
+        height: 30%;
+        bottom: 10%;
+        right: 0%;
+        border-radius: 50px 0px 0px 50px;
+    }
+    .landingPage > div {
+        width: 70%;}
+}
+
+@media only screen and (max-width: 650px) {
+    .landingPage div h1 {
+        font-size: 2em;
+    }
+}
 
 @media only screen and (max-width: 500px) {
     .landingPage {
@@ -201,7 +261,6 @@ fieldset {
     .landingPage div h1 {
         font-size: 3em;
         font-weight: 800;
-        color: var(--darkBeige);
         width: 95%;
         text-align: center;
     }
@@ -218,5 +277,22 @@ fieldset {
 
     .art {
         width: 100%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .landingPage .img1 {
+        width: 100%;
+        height: 30%;
+        top: 0%;
+        left: 0%;
+        border-radius: 0px;
+    }
+
+    .landingPage .img2 {
+       display: none;
+    }
+    .landingPage div h1 {
+        font-size: 1.8em;
     }
 }

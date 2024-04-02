@@ -1,25 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello NemController!{% endblock %}
-{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% form_theme formImage 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-    <div class="addImageContainer">
-        <div class="imageAddedContainer">
-            {% for image in comment.images %}
-                {% include 'image.html.twig' with  {
-                    'route_name':'delete_image',
-                    'imgClass':'imageAdded',
-                    'image':image,
-                    'param':{'id':image.id},
-                    'aClass':''} %}
-            {% endfor %}
+    <div class="containerMade">
+
+        <div class="addImageContainer">
+            <div class="imageAddedContainer">
+                {% for image in comment.images %}
+                    {% include 'image.html.twig' with  {
+                        'route_name':'delete_image',
+                        'imgClass':'imageAdded',
+                        'image':image,
+                        'param':{'id':image.id},
+                        'aClass':'imagePreview'} %}
+                {% endfor %}
+            </div>
+
+            {% if comment.images|length <3 %}
+
+                {{ form_start(formImage,{'action':path('add_image_comment',{'id': comment.id})}) }}
+                {{ form_end(formImage) }}
+
+          {% else %}
+                <h1>Vous ne pouvez entrer que 3 photos par commentaire</h1>
+            {% endif %}
+            <a href="{{ path('show_article',{'id':comment.article.id}) }}" class="btn btn2">Voir
+                l'article</a>
         </div>
 
-
-        {{ form_start(form,{'action':path('add_image_comment',{'id': comment.id})}) }}
-        {{ form_end(form) }}
-        <a href="{{ path('show_article',{'id':comment.article.id}) }}" class="btn btn-primary">Retour</a>
     </div>
-
 {% endblock %}

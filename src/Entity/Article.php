@@ -318,8 +318,9 @@ class Article
     {
         $isLikedBy = false;
         foreach ($this->likes as $like){
-            if($like->getAuthor == $user){
-                return $isLikedBy;
+
+            if($like->getAuthor() == $user){
+                return true;
             }
         }
         return $isLikedBy;
