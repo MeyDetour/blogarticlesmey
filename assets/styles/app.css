@@ -126,11 +126,14 @@ header {
     flex-direction: row;
     justify-content: center;
     padding: 2vh 4vw;
+    margin-bottom: 5vh;
     gap: 4vw;
     align-items: center;
     box-shadow: 0px 4px 5px #0000001c;
 }
-
+header h3{
+    font-size: 1.2em;
+}
 .warningContainer {
     padding: 2vh 3vw;
     border-radius: 15px;
