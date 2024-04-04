@@ -30,10 +30,7 @@
                 <a class="nav-link {% if currentPath == '/video' %} active {% endif %}  " aria-current="page"
                    href="{{ path('app_video') }}">Videos</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if currentPath == '/about' %} active {% endif %}  " aria-current="page"
-                   href="{{ path('about_us') }}">About us</a>
-            </li>
+
             {% if app.user %}
                 {% if 'ROLE_ADMIN'in app.user.roles %}
                     <li class="nav-item">
