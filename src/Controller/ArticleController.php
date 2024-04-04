@@ -137,7 +137,8 @@ class ArticleController extends AbstractController
         if ($this->getUser() != $article->getAuthor()) {
             return $this->redirectToRoute('app_article');
         }
-      $article->setStatus('ARCHIVED');
+     $manager->remove($article);
+        $manager->flush();
         return $this->redirectToRoute('app_article');
     }
 
