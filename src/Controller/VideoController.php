@@ -30,14 +30,9 @@ class VideoController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $cp = $video;
         $manager->remove($video);
         $manager->flush();
-        if ($cp->getArticle()) {
-            return $this->redirectToRoute('article_file', ['id' => $cp->getArticle()->getId()]);
-        } else {
-            return $this->redirectToRoute('app_article');
-        }
+       return $this->redirectToRoute('app_video');
     }
 
     #[Route('/video/article/{id}/new', name: 'add_video_article')]

@@ -8,12 +8,22 @@
     <div class="row">
         {% for video in videos %}
             <div class="videoPageVideo col-lg-4 col-sm-12">
+
+                {% if 'ROLE_ADMIN' in app.user.roles %}
                 {% include 'video.html.twig' with  {
-                    'route_name':'',
+                    'route_name':'delete_video',
                     'videoClass':'imageAdded ',
                     'video':video,
-                    'param':'',
+                    'param':{"id":video.id},
                     'aClass':''} %}
+                    {% else %}
+                        {% include 'video.html.twig' with  {
+                            'route_name':'',
+                            'videoClass':'imageAdded ',
+                            'video':video,
+                            'param':'',
+                            'aClass':''} %}
+                {% endif %}
             </div>
         {% endfor %}
 
