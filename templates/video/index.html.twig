@@ -4,18 +4,19 @@
 
 {% block body %}
 
-<div class="containerMade">
-    <div class="row">
-        {% for video in videos %}
-            <div class="videoPageVideo col-lg-4 col-sm-12">
-
-                {% if 'ROLE_ADMIN' in app.user.roles %}
-                {% include 'video.html.twig' with  {
-                    'route_name':'delete_video',
-                    'videoClass':'imageAdded ',
-                    'video':video,
-                    'param':{"id":video.id},
-                    'aClass':''} %}
+    <div class="containerMade">
+        <div class="row">
+            {% for video in videos %}
+                <div class="videoPageVideo col-lg-4 col-sm-12">
+                    {% if app.user %}
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                            {% include 'video.html.twig' with  {
+                                'route_name':'delete_video',
+                                'videoClass':'imageAdded ',
+                                'video':video,
+                                'param':{"id":video.id},
+                                'aClass':''} %}
+                        {% endif %}
                     {% else %}
                         {% include 'video.html.twig' with  {
                             'route_name':'',
@@ -23,13 +24,13 @@
                             'video':video,
                             'param':'',
                             'aClass':''} %}
-                {% endif %}
-            </div>
-        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+        </div>
 
     </div>
-
-</div>
 
 
 
