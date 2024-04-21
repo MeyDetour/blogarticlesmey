@@ -261,9 +261,9 @@
                                 <div class="cardAuthor">
 
                                     <div class="cardAuthorAuthor">
-                                        {% if article.author.image %}
+                                        {% if comment.author.image %}
                                             <img class="imgPdp"
-                                                 src="{{ vich_uploader_asset(article.author.image) | imagine_filter('ma_vignette') }}"
+                                                 src="{{ vich_uploader_asset(comment.author.image) | imagine_filter('ma_vignette') }}"
                                                  alt="">
                                         {% else %}
 
@@ -273,7 +273,7 @@
                                         {% endif %}
                                         <div>
 
-                                            {{ article.author.username }}
+                                            {{ comment.author.username }}
                                             <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                         </div>
                                     </div>
@@ -413,9 +413,9 @@
                                     <div class="cardAuthor">
 
                                         <div class="cardAuthorAuthor">
-                                            {% if article.author.image %}
+                                            {% if comment.author.image %}
                                                 <img class="imgPdp"
-                                                     src="{{ vich_uploader_asset(article.author.image) | imagine_filter('ma_vignette') }}"
+                                                     src="{{ vich_uploader_asset(comment.author.image) | imagine_filter('ma_vignette') }}"
                                                      alt="">
                                             {% else %}
 
@@ -425,7 +425,7 @@
                                             {% endif %}
                                             <div>
 
-                                                {{ article.author.username }}
+                                                {{ comment.author.username }}
                                                 <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                             </div>
                                         </div>
@@ -627,9 +627,9 @@
                         <div class="cardAuthor">
 
                             <div class="cardAuthorAuthor">
-                                {% if article.author.image %}
+                                {% if comment.author.image %}
                                     <img class="imgPdp"
-                                         src="{{ vich_uploader_asset(article.author.image) | imagine_filter('ma_vignette') }}"
+                                         src="{{ vich_uploader_asset(comment.author.image) | imagine_filter('ma_vignette') }}"
                                          alt="">
                                 {% else %}
 
@@ -639,7 +639,7 @@
                                 {% endif %}
                                 <div>
 
-                                    {{ article.author.username }}
+                                    {{ comment.author.username }}
                                     <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                 </div>
                             </div>
