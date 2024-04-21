@@ -53,7 +53,7 @@ class Article
     #[ORM\Column]
     private ?bool $displayComments = null;
 
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'article')]
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'article' , orphanRemoval: true)]
     private Collection $likes;
 
     #[ORM\Column(type: Types::TEXT)]
