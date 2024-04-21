@@ -6,8 +6,6 @@
 }
 
 .audioAudio {
-
-     
     display: flex;
     flex-direction: column;
     gap: 2vh;
@@ -16,7 +14,7 @@
     border: 2px solid var(--dash);
     padding: 2vh 2vw;
     border-radius: 10px;
-
+margin-block: 20px;
 }
 .audioAudio h2{
     color: var(--dash) !important;
