@@ -49,6 +49,7 @@
                 <div class="addImageContainer">
                     {% if article.images|length != nb %}
                     {{ form_start(formImage,{'action':path('add_image_article',{'id': article.id})}) }}
+                    {{ form_row(formImage.imageFile) }}
                     {{ form_end(formImage) }}
 {% endif %}
                     {#
