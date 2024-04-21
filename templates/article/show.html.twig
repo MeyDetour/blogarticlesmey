@@ -279,6 +279,8 @@
                                             <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                         </div>
                                     </div>
+
+                                    {% if comment.author == app.user %}
                                     <div class="dropdown settingsDropdown">
                                         <button class="btn " type="button" data-bs-toggle="dropdown">
                                             <i class=" bi bi-sliders"></i>
@@ -303,7 +305,7 @@
 
                                         </ul>
                                     </div>
-
+{% endif %}
                                 </div>
                             </div>
                         {% endfor %}
@@ -429,6 +431,8 @@
                                                 <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                             </div>
                                         </div>
+
+                                        {% if comment.author == app.user %}
                                         <div class="dropdown settingsDropdown">
                                             <button class="btn " type="button" data-bs-toggle="dropdown">
                                                 <i class=" bi bi-sliders"></i>
@@ -453,7 +457,7 @@
 
                                             </ul>
                                         </div>
-
+{% endif %}
                                     </div>
                                 </div>
                             {% endfor %}
@@ -641,6 +645,7 @@
                                     <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                 </div>
                             </div>
+                            {% if comment.author == app.user %}
                             <div class="dropdown settingsDropdown">
                                 <button class="btn " type="button" data-bs-toggle="dropdown">
                                     <i class=" bi bi-sliders"></i>
@@ -663,7 +668,9 @@
                                             image</a></li>
 
                                 </ul>
+
                             </div>
+                            {% endif %}
 
                         </div>
                     </div>
