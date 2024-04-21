@@ -278,7 +278,7 @@
                                         </div>
                                     </div>
 
-                                    {% if comment.author == app.user %}
+                                    {% if comment.author.email == app.user.email %}
                                     <div class="dropdown settingsDropdown">
                                         <button class="btn " type="button" data-bs-toggle="dropdown">
                                             <i class=" bi bi-sliders"></i>
@@ -430,7 +430,7 @@
                                             </div>
                                         </div>
 
-                                        {% if comment.author == app.user %}
+                                        {% if comment.author.email == app.user.email %}
                                         <div class="dropdown settingsDropdown">
                                             <button class="btn " type="button" data-bs-toggle="dropdown">
                                                 <i class=" bi bi-sliders"></i>
@@ -643,7 +643,7 @@
                                     <p>{{ comment.createdAt | date('d-m-Y') }}</p>
                                 </div>
                             </div>
-                            {% if comment.author == app.user %}
+                            {% if comment.author.email == app.user.email %}
                             <div class="dropdown settingsDropdown">
                                 <button class="btn " type="button" data-bs-toggle="dropdown">
                                     <i class=" bi bi-sliders"></i>
