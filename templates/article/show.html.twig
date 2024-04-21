@@ -51,12 +51,10 @@
             {#  HEADER  #}
             {% if mod == 'completeArticle' %}
                 <header class="headerArticle">
-                    <img class="imageFondArticle" src="{{ asset('images/headerArticle.webp') }}" alt="Image de fond">
 
-                    <div class="rightHeaderArticle">
                         <h1>{{ article.title }}</h1>
                         <p>{{ article.chapo }}</p>
-                    </div>
+
                     {% if app.user == article.author %}
 
                         <div class="dropdown settingsDropdown">
