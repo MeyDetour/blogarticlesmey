@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccfdfc26866665dee3fdfa0a227992b5",
+    "content-hash": "7dbe5a81b8cd24f52e6ecdb28f23d1b7",
     "packages": [
         {
             "name": "amphp/amp",
@@ -8487,7 +8487,7 @@
         },
         {
             "name": "symfony/ux-turbo",
-            "version": "v2.15.0",
+            "version": "v2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-turbo.git",
@@ -8563,7 +8563,7 @@
                 "turbo-stream"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-turbo/tree/v2.15.0"
+                "source": "https://github.com/symfony/ux-turbo/tree/v2.16.0"
             },
             "funding": [
                 {
